@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use Data::Dumper;
 
-my ($input_file_1, $input_file_2) = @ARGV;
+my ($input_file_1, $input_file_2, $output_file) = @ARGV;
 
 my $context = {};
 
@@ -30,28 +30,43 @@ sub initialise_context{
 	$context->{"input_file"}->{"1"} = $input_file_1;
 	$context->{"input_file"}->{"2"} = $input_file_2;
 	
-	$context->{"desired_audio_length"} = 786;
+	# 4 voice, gives a 13 ish minute audio
+	#$context->{"desired_audio_length"} = 786;
+	
+	# For centred voice, round up length of input audio to 1x
+	$context->{"desired_audio_length"} = 605;
+	
 	$context->{"output_base"} = "./out";
 	
 	$context->{"output_folder"}->{1} = $context->{"output_base"} . "/1";
 	$context->{"output_folder"}->{2} = $context->{"output_base"} . "/2";
 	
 	$context->{"binaural_folder"} = "./binaurals";
-	$context->{"binaural_file_l"} = $context->{"binaural_folder"} . "/theta_l_20.wav";
-	$context->{"binaural_file_r"} = $context->{"binaural_folder"} . "/theta_r_20.wav";
+	$context->{"binaural_file_l"} = $context->{"binaural_folder"} . "/theta_l_f_25.wav";
+	$context->{"binaural_file_r"} = $context->{"binaural_folder"} . "/theta_r_f_25.wav";
 	
 	$context->{"silence_folder"} = $context->{"output_base"} . "/silence";
+	# 4 voice
 	$context->{"gap_silence_length"} = "0.5";
+	# Centred voice
+	#$context->{"gap_silence_length"} = "7";	
+	
 	$context->{"intro_silence_length"} = "120";
 	
 	$context->{"combined_parts_folder"} = $context->{"output_base"} . "/combined";
+	
+	# level for 4 voice
 	$context->{"male_voice_track_level"} = "0.25";
+	
+	# Level for centre voice
+	#$context->{"male_voice_track_level"} = "0.5";
+	
 	$context->{"female_voice_track_level"} = "0.4";
 	$context->{"binaural_track_level"} = "1.0";
-	$context->{"silence_threshold"} = 1;	
+	$context->{"silence_threshold"} = 0.1;	
 	
 	
-	$context->{"outfile"} = "./affirmations.wav";
+	$context->{"outfile"} = "./$output_file";
 	
 }
 

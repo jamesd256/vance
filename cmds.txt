@@ -1,0 +1,11 @@
+./emulator -avd Pixel_XL_API_26  -use-system-libs
+ 
+
+../pronouncer.pl ./alicia.txt
+../i2y.pl ./alicia.txt_pronouncer.txt
+adb push text/alicia.txt /sdcard/Download/alicia2.txt
+adb pull  /sdcard/Download/alicia_y.wav
+
+./build_audio.pl alicia_i.wav alicia_y.wav
+
+
